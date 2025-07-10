@@ -2,32 +2,28 @@ package com.NextGenPay.data.model;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.LocalDate;
 
-import java.time.LocalDateTime;
 
-@Getter
 @Setter
-@Document(collection="User")
-public class User {
-
-    @Id
-    private String Id;
+@Getter
+@Document(collection="UserProfile")
+public class UserProfile {
 
     @NotNull(message = "This field is required")
-    private String email;
+    private String userProfileId;
 
     @NotNull(message = "This field is required")
-    private String password;
+    private String firstName;
 
     @NotNull(message = "This field is required")
-    private String phoneNumber;
+    private String lastName;
+
+    @NotNull(message ="This field is required")
+    private String address;
 
     @NotNull(message = "This field is required")
-    private LocalDateTime createdAt;
-
-    @NotNull(message = "This field is required")
-    private LocalDateTime lastLogin;
+    private LocalDate dateOfBirth;
 
 }

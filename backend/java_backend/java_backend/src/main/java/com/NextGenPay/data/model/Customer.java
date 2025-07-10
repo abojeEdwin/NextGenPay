@@ -7,27 +7,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
+
 @Getter
 @Setter
-@Document(collection="User")
-public class User {
+@Document(collection = "Customer")
+public class Customer extends User{
 
     @Id
-    private String Id;
+    private String customerId;
 
     @NotNull(message = "This field is required")
-    private String email;
+    private String Password;
 
     @NotNull(message = "This field is required")
-    private String password;
+    CustomerStatus customerStatus;
 
-    @NotNull(message = "This field is required")
-    private String phoneNumber;
 
-    @NotNull(message = "This field is required")
-    private LocalDateTime createdAt;
 
-    @NotNull(message = "This field is required")
-    private LocalDateTime lastLogin;
 
 }
