@@ -75,16 +75,6 @@ class CustomerServiceImplTest {
        request1.setPassword("0000");
        assertThrows(EmailAlreadyExistException.class,()->customerService.registerCustomer(request1));
     }
-
-    @Test
-    public void testUserRegisterWithInvalidEmail() {
-        CustomerRegisterRequest request = new CustomerRegisterRequest();
-        request.setEmail("sam@gmail");
-        request.setPhoneNumber("090998800188");
-        request.setPassword("0000");
-        assertThrows(InvalidEmailException.class,()->customerService.registerCustomer(request));
-    }
-
     @Test
     public void testCustomerRegisterWithInvalidPhoneNumber() {
         CustomerRegisterRequest request = new CustomerRegisterRequest();

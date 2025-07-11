@@ -60,6 +60,6 @@ public class CustomerServiceImpl implements CustomerServiceAuth {
         CustomerLoginResponse loginResponse = new CustomerLoginResponse();
         loginResponse.setToken(token);
         loginResponse.setMessage("Success");
-        return new CustomerLoginResponse(loginResponse.getToken(),loginResponse.getMessage());
+        return new CustomerLoginResponse(loginResponse.getMessage(),loginResponse.getToken());
     }
 }
