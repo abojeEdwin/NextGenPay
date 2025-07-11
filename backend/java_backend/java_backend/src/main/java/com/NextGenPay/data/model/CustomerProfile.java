@@ -15,16 +15,17 @@ public class CustomerProfile {
     @Id
     private String Id;
 
-    @NotNull(message = "This field is required")
+
     private String firstName;
 
-    @NotNull(message = "This field is required")
     private String lastName;
 
-    @NotNull(message ="This field is required")
     private String address;
 
-    @NotNull(message = "This field is required")
+    private String userName;
+
     private LocalDate dateOfBirth;
+
+    private String profileImage;
 
 }
