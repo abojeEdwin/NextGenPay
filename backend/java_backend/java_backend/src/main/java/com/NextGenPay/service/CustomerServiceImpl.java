@@ -20,8 +20,6 @@ public class CustomerServiceImpl implements CustomerServiceAuth {
     @Autowired
     private CustomerRepo customerRepo;
     @Autowired
-    private VerifyEmail verifyEmail;
-    @Autowired
     private VerifyPhone verifyPhone;
     @Autowired
     private HashPassword hashPassword;
@@ -34,7 +32,6 @@ public class CustomerServiceImpl implements CustomerServiceAuth {
     public CustomerRegisterResponse registerCustomer(CustomerRegisterRequest registerRequest) {
        if(customerRepo.existsByEmail(registerRequest.getEmail())){
            throw new EmailAlreadyExistException("Email already exists");}
-        if(!verifyEmail.isVerifiedEmail(registerRequest.getEmail())){throw new InvalidEmailException("Invalid email, please try again.");}
         if(!verifyPhone.isVerifiedPhoneNumber(registerRequest.getPhoneNumber())){throw new InvalidPhoneNumberException("Invalid phone number");}
         String hashedPassword = HashPassword.hashPassword(registerRequest.getPassword());
        Customer customer = new Customer();
