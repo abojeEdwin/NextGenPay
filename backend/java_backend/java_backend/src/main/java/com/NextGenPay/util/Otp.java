@@ -1,47 +1,38 @@
 package com.NextGenPay.util;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Component;
-
-import java.util.Map;
+import org.springframework.stereotype.Service;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Component
+@Service
 public class Otp {
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final ConcurrentHashMap<String, String> otpStorage = new ConcurrentHashMap<>();
+    private static final int OTP_LENGTH = 6;
+    private static final long OTP_VALID_DURATION = 5 * 60 * 1000; // 5 minutes
 
-    @Autowired
-    JwtAuth jwt;
-
-    @Value("${app.email.from}")
-    private String fromEmail;
-
-    private Map<String, String> otpStorage = new ConcurrentHashMap<>();
-
-    public String generateOTP() {
-        return RandomStringUtils.randomNumeric(6);}
-
-    public void sendOTPEmail(String email, String purpose) {
-        String otp = generateOTP();
-        otpStorage.put(email + ":" + purpose, otp);
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(fromEmail);
-        message.setTo(email);
-        message.setSubject("Your OTP for " + purpose);
-        message.setText("Your OTP is: " + otp + "\nThis OTP is valid for 5 minutes.");
-        mailSender.send(message);
+    public String generateOTP(String email) {
+        Random random = new Random();
+        StringBuilder otp = new StringBuilder();
+        for (int i = 0; i < OTP_LENGTH; i++) {
+            otp.append(random.nextInt(10));
+        }
+        otpStorage.put(email, otp.toString());
+        return otp.toString();
     }
 
-    public boolean validateOTP(String email, String purpose, String otp) {
-        String key = email + ":" + purpose;
-        String storedOtp = otpStorage.get(key);
-        if (storedOtp != null && storedOtp.equals(otp)) {otpStorage.remove(key);return true;}return false;}
+    public boolean verifyOTP(String email, String otp) {
+        String storedOtp = otpStorage.get(email);
+        if (storedOtp != null && storedOtp.equals(otp)) {
+            otpStorage.remove(email);
+            return true;
+        }
+        return false;
+    }
 
     public String verifyOTPAndGenerateToken(String email, String otp) {
-        if (validateOTP(email, "login", otp)) {return jwt.generateToken(email);}throw new SecurityException("Invalid OTP");}
+        if (!verifyOTP(email, otp)) {
+            throw new RuntimeException("Invalid OTP");
+        }
+        return "TOKEN-" + System.currentTimeMillis();
+    }
 }

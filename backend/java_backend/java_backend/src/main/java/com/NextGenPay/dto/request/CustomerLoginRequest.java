@@ -20,7 +20,5 @@ public class CustomerLoginRequest {
     @NotNull(message="This field is required")
     private String password;
 
-    @NotNull(message="This field is required")
-    private String otp;
 
 }
