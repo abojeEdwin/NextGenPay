@@ -1,12 +1,11 @@
 package com.NextGenPay.service;
-
-import com.NextGenPay.data.model.Customer;
 import com.NextGenPay.data.repository.CustomerRepo;
 import com.NextGenPay.dto.request.CustomerLoginRequest;
 import com.NextGenPay.dto.request.CustomerRegisterRequest;
 import com.NextGenPay.dto.response.CustomerLoginResponse;
 import com.NextGenPay.exception.EmailAlreadyExistException;
 import com.NextGenPay.exception.InvalidEmailException;
+import com.NextGenPay.exception.InvalidPasswordException;
 import com.NextGenPay.exception.InvalidPhoneNumberException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,7 +57,7 @@ class CustomerServiceImplTest {
    public void testCustomerRegisterWithDuplicateEmail() {
        CustomerRegisterRequest request = new CustomerRegisterRequest();
        request.setEmail("sam@gmail.com");
-       request.setPassword("090998800188");
+       request.setPhoneNumber("09098800188");
        request.setPassword("0000");
        customerService.registerCustomer(request);
        assertEquals(1,customerRepo.count());
@@ -74,18 +73,34 @@ class CustomerServiceImplTest {
     public void testUserRegisterWithInvalidEmail() {
         CustomerRegisterRequest request = new CustomerRegisterRequest();
         request.setEmail("sam@gmail");
-        request.setPassword("090998800188");
+        request.setPhoneNumber("090998800188");
         request.setPassword("0000");
         assertThrows(InvalidEmailException.class,()->customerService.registerCustomer(request));
     }
 
     @Test
-    public void testCustomerCanRegisterWithInvalidPhoneNumber() {
+    public void testCustomerRegisterWithInvalidPhoneNumber() {
         CustomerRegisterRequest request = new CustomerRegisterRequest();
         request.setEmail("sam@gmail.com");
         request.setPhoneNumber(" ");
         request.setPassword("0000");
         assertThrows(InvalidPhoneNumberException.class,()-> customerService.registerCustomer(request));
+    }
+
+    @Test
+    public void testUserLoginWithInvalidEmail() {
+        CustomerRegisterRequest request = new CustomerRegisterRequest();
+        request.setEmail("Choko@gmail.com");
+        request.setPhoneNumber("09096041561");
+        request.setPassword("0000");
+        customerService.registerCustomer(request);
+        assertEquals(1,customerRepo.count());
+
+        CustomerLoginRequest request1 = new CustomerLoginRequest();
+        request1.setEmail("Choko@gmail.com");
+        request1.setPassword("1111");
+        assertThrows(InvalidPasswordException.class,()->customerService.loginCustomer(request1));
+
     }
 
 

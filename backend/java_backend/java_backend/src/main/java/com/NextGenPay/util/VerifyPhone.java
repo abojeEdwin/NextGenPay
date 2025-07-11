@@ -5,10 +5,11 @@ import java.util.regex.Pattern;
 @Component
 public class VerifyPhone {
 
-    private static String PhoneNumberRegex = ".*\\s.*(?=.*\\b\\d{11}\\b).*";
+    private static String PhoneNumberRegex = "^\\d{11}$";
     public boolean isVerifiedPhoneNumber(String phoneNumber) {
         return Pattern.compile(PhoneNumberRegex).
                 matcher(phoneNumber).
                 matches();
+
     }
 }

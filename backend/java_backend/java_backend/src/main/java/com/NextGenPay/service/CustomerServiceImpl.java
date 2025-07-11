@@ -7,10 +7,9 @@ import com.NextGenPay.dto.request.CustomerLoginRequest;
 import com.NextGenPay.dto.request.CustomerRegisterRequest;
 import com.NextGenPay.dto.response.CustomerLoginResponse;
 import com.NextGenPay.dto.response.CustomerRegisterResponse;
-import com.NextGenPay.exception.EmailAlreadyExistException;
-import com.NextGenPay.exception.InvalidEmailException;
-import com.NextGenPay.exception.InvalidPhoneNumberException;
+import com.NextGenPay.exception.*;
 import com.NextGenPay.util.HashPassword;
+import com.NextGenPay.util.JwtAuth;
 import com.NextGenPay.util.VerifyEmail;
 import com.NextGenPay.util.VerifyPhone;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,8 @@ public class CustomerServiceImpl implements com.NextGenPay.service.CustomerServi
     private VerifyPhone verifyPhone;
     @Autowired
     private HashPassword hashPassword;
+    @Autowired
+    private JwtAuth jwtAuth;
 
     @Override
     public CustomerRegisterResponse registerCustomer(CustomerRegisterRequest registerRequest) {
@@ -54,8 +55,16 @@ public class CustomerServiceImpl implements com.NextGenPay.service.CustomerServi
 
     @Override
     public CustomerLoginResponse loginCustomer(CustomerLoginRequest loginRequest) {
-        CustomerLoginResponse loginResponse = new CustomerLoginResponse();
+
         Customer foundCustomer = customerRepo.findByEmail(loginRequest.getEmail());
+        if(!HashPassword.verifyPassword(loginRequest.getPassword(),foundCustomer.getPassword())){
+            throw new InvalidPasswordException("Invalid password, please try again.");}
+        if(foundCustomer == null){
+            throw new CustomerNotFoundException("No Customer Found");
+        }
+        String token = jwtAuth.generateToken(loginRequest.getEmail());
+        CustomerLoginResponse loginResponse = new CustomerLoginResponse();
+        loginResponse.setToken(token);
         loginResponse.setMessage("Success");
         return loginResponse;
     }
