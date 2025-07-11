@@ -8,10 +8,7 @@ import com.NextGenPay.dto.request.CustomerRegisterRequest;
 import com.NextGenPay.dto.response.CustomerLoginResponse;
 import com.NextGenPay.dto.response.CustomerRegisterResponse;
 import com.NextGenPay.exception.*;
-import com.NextGenPay.util.HashPassword;
-import com.NextGenPay.util.JwtAuth;
-import com.NextGenPay.util.VerifyEmail;
-import com.NextGenPay.util.VerifyPhone;
+import com.NextGenPay.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +27,8 @@ public class CustomerServiceImpl implements CustomerServiceAuth {
     private HashPassword hashPassword;
     @Autowired
     private JwtAuth jwtAuth;
+    @Autowired
+    private Otp otpService;
 
     @Override
     public CustomerRegisterResponse registerCustomer(CustomerRegisterRequest registerRequest) {
@@ -66,6 +65,7 @@ public class CustomerServiceImpl implements CustomerServiceAuth {
         CustomerLoginResponse loginResponse = new CustomerLoginResponse();
         loginResponse.setToken(token);
         loginResponse.setMessage("Success");
-        return loginResponse;
+        otpService.verifyOTPAndGenerateToken(loginRequest.getEmail(), loginRequest.getOtp());
+        return new CustomerLoginResponse(loginResponse.getToken(),loginResponse.getMessage());
     }
 }
