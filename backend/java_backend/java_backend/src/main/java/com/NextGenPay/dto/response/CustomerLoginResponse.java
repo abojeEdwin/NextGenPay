@@ -5,4 +5,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CustomerLoginResponse {
+
+    private String message;
+    private String token;
 }

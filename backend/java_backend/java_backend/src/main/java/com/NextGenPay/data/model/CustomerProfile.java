@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @Document(collection="UserProfile")
-public class UserProfile {
+public class CustomerProfile {
 
     @Id
     private String Id;
