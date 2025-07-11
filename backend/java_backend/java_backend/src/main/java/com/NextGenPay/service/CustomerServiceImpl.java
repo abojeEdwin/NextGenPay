@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class CustomerServiceImpl implements com.NextGenPay.service.CustomerServiceAuth {
+public class CustomerServiceImpl implements CustomerServiceAuth {
 
     @Autowired
     private CustomerRepo customerRepo;
@@ -57,7 +57,7 @@ public class CustomerServiceImpl implements com.NextGenPay.service.CustomerServi
     public CustomerLoginResponse loginCustomer(CustomerLoginRequest loginRequest) {
 
         Customer foundCustomer = customerRepo.findByEmail(loginRequest.getEmail());
-        if(!HashPassword.verifyPassword(loginRequest.getPassword(),foundCustomer.getPassword())){
+        if(!HashPassword.verifyPassword(foundCustomer.getPassword(),loginRequest.getPassword())){
             throw new InvalidPasswordException("Invalid password, please try again.");}
         if(foundCustomer == null){
             throw new CustomerNotFoundException("No Customer Found");

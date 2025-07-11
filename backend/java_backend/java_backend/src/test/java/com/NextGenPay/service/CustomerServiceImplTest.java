@@ -46,10 +46,17 @@ class CustomerServiceImplTest {
 
    @Test
    public void testCustomerCanLogin() {
-        CustomerLoginRequest request = new CustomerLoginRequest();
-        request.setEmail("Choko@gmail.com");
-        request.setPassword("0000");
-        CustomerLoginResponse response = customerService.loginCustomer(request);
+       CustomerRegisterRequest request = new CustomerRegisterRequest();
+       request.setEmail("Choko@gmail.com");
+       request.setPhoneNumber("09096041561");
+       request.setPassword("0000");
+       customerService.registerCustomer(request);
+       assertEquals(1,customerRepo.count());
+
+        CustomerLoginRequest request1 = new CustomerLoginRequest();
+        request1.setEmail("Choko@gmail.com");
+        request1.setPassword("0000");
+        CustomerLoginResponse response = customerService.loginCustomer(request1);
         assertEquals("Success",response.getMessage());
    }
 
