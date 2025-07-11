@@ -25,8 +25,6 @@ public class CustomerServiceImpl implements CustomerServiceAuth {
     private HashPassword hashPassword;
     @Autowired
     private JwtAuth jwtAuth;
-    @Autowired
-    private Otp otpService;
 
     @Override
     public CustomerRegisterResponse registerCustomer(CustomerRegisterRequest registerRequest) {
@@ -62,7 +60,6 @@ public class CustomerServiceImpl implements CustomerServiceAuth {
         CustomerLoginResponse loginResponse = new CustomerLoginResponse();
         loginResponse.setToken(token);
         loginResponse.setMessage("Success");
-        otpService.verifyOTPAndGenerateToken(loginRequest.getEmail(), loginRequest.getOtp());
         return new CustomerLoginResponse(loginResponse.getToken(),loginResponse.getMessage());
     }
 }

@@ -1,5 +1,4 @@
 package com.NextGenPay.service;
-
 import com.NextGenPay.data.model.Wallet;
 import com.NextGenPay.data.repository.WalletRepository;
 import com.NextGenPay.dto.request.GenerateWalletRequest;
@@ -7,9 +6,9 @@ import com.NextGenPay.dto.response.GenerateWalletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.security.SecureRandom;
+
 
 @Service
 @RequiredArgsConstructor

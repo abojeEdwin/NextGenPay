@@ -1,5 +1,4 @@
 package com.NextGenPay.service;
-
 import com.NextGenPay.data.repository.WalletRepository;
 import com.NextGenPay.dto.request.GenerateWalletRequest;
 import com.NextGenPay.dto.response.GenerateWalletResponse;
@@ -8,7 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mail.javamail.JavaMailSender;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,13 +34,14 @@ class GenerateWalletServiceImplTest {
         walletRepo.deleteAll();
     }
 
+    @MockBean
+    private JavaMailSender javaMailSender;
+
     @Test
     void generateWallet_ShouldCreateWalletAndReturnExpectedResponse(){
         String customerId = "12345678";
         GenerateWalletRequest  request = new GenerateWalletRequest(customerId);
-
         GenerateWalletResponse response = service.generateWallet(request);
-
         assertEquals(1,walletRepo.count());
         assertNotNull(response);
         assertEquals(10, response.getAccountNumber().length(), "Account number should be 10");
