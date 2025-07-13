@@ -5,7 +5,7 @@ import com.NextGenPay.dto.request.EmailRequest;
 import com.NextGenPay.dto.response.CustomerLoginResponse;
 import com.NextGenPay.dto.response.CustomerRegisterResponse;
 import com.NextGenPay.service.CustomerServiceImpl;
-import com.NextGenPay.util.Otp;
+//import com.NextGenPay.util.Otp;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,18 +21,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerAuthController {
 
     private final CustomerServiceImpl customerService;
-    private final Otp otpService;
+//    private final Otp otpService;
 
     @PostMapping("/register")
     public ResponseEntity<CustomerRegisterResponse> registerCustomer(@RequestBody @Valid CustomerRegisterRequest request){
         return ResponseEntity.ok(customerService.registerCustomer(request));
     }
 
-    @PostMapping("/requestOtp")
-    public ResponseEntity <?>requestOtp(@RequestBody @Valid EmailRequest emailRequest) {
-        otpService.sendOTPEmail(emailRequest.getEmail(),"login");
-        return ResponseEntity.ok("OTP Sent");
-    }
+//    @PostMapping("/requestOtp")
+//    public ResponseEntity <?>requestOtp(@RequestBody @Valid EmailRequest emailRequest) {
+//        otpService.sendOTPEmail(emailRequest.getEmail(),"login");
+//        return ResponseEntity.ok("OTP Sent");
+//    }
 
     @PostMapping("/login")
     public ResponseEntity<CustomerLoginResponse> loginCustomer(@RequestBody @Valid CustomerLoginRequest request){

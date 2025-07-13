@@ -25,8 +25,8 @@ public class CustomerServiceImpl implements CustomerServiceAuth {
     private HashPassword hashPassword;
     @Autowired
     private JwtAuth jwtAuth;
-    @Autowired
-    private Otp otpService;
+//    @Autowired
+//    private Otp otpService;
 
     @Override
     public CustomerRegisterResponse registerCustomer(CustomerRegisterRequest registerRequest) {
@@ -52,17 +52,18 @@ public class CustomerServiceImpl implements CustomerServiceAuth {
     @Override
     public CustomerLoginResponse loginCustomer(CustomerLoginRequest loginRequest) {
 
-        Customer foundCustomer = customerRepo.findByEmail(loginRequest.getEmail());
-        if(!HashPassword.verifyPassword(foundCustomer.getPassword(),loginRequest.getPassword())){
-            throw new InvalidPasswordException("Invalid password, please try again.");}
-        if(foundCustomer == null){
-            throw new CustomerNotFoundException("No Customer Found");
-        }
-        String token = jwtAuth.generateToken(loginRequest.getEmail());
-        CustomerLoginResponse loginResponse = new CustomerLoginResponse();
-        loginResponse.setToken(token);
-        loginResponse.setMessage("Success");
-        otpService.verifyOTPAndGenerateToken(loginRequest.getEmail(), loginRequest.getOtp());
-        return new CustomerLoginResponse(loginResponse.getToken(),loginResponse.getMessage());
+        return null;
+//        Customer foundCustomer = customerRepo.findByEmail(loginRequest.getEmail());
+//        if(!HashPassword.verifyPassword(foundCustomer.getPassword(),loginRequest.getPassword())){
+//            throw new InvalidPasswordException("Invalid password, please try again.");}
+//        if(foundCustomer == null){
+//            throw new CustomerNotFoundException("No Customer Found");
+//        }
+//        String token = jwtAuth.generateToken(loginRequest.getEmail());
+//        CustomerLoginResponse loginResponse = new CustomerLoginResponse();
+//        loginResponse.setToken(token);
+//        loginResponse.setMessage("Success");
+//        otpService.verifyOTPAndGenerateToken(loginRequest.getEmail(), loginRequest.getOtp());
+//        return new CustomerLoginResponse(loginResponse.getToken(),loginResponse.getMessage());
     }
 }
