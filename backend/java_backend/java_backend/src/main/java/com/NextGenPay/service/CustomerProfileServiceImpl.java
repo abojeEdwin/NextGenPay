@@ -6,6 +6,7 @@ import com.NextGenPay.data.repository.CustomerRepo;
 import com.NextGenPay.dto.request.CreateProfileRequest;
 import com.NextGenPay.dto.response.CreateProfileResponse;
 import com.NextGenPay.exception.CustomerNotFoundException;
+import com.NextGenPay.exception.UserNameAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class CustomerProfileServiceImpl implements CustomerProfileService{
         Customer foundCustomer = customerRepo.findCustomerByCustomerId(createProfileRequest.getCustomerId());
 
         if(foundCustomer == null){throw new CustomerNotFoundException("Customer not found");}
+        if(customerProfileRepo.existsByUserName(createProfileRequest.getUserName())){throw new UserNameAlreadyExistException("Username already exist, please try another");}
 
         CustomerProfile customerProfile = new CustomerProfile();
 
