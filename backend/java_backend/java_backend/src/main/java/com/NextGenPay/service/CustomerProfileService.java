@@ -10,7 +10,5 @@ public interface CustomerProfileService {
 
     CreateProfileResponse createProfile(CreateProfileRequest createProfileRequest);
     CreateProfileResponse updateProfile(CreateProfileRequest createProfileRequest);
-    CustomerProfile findCustomerProfileByUsername(String userName);
-    CustomerProfile findCustomerProfileById(String id);
 
 }
