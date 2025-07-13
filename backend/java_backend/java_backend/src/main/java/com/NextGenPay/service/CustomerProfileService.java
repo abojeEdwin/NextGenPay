@@ -1,4 +1,5 @@
 package com.NextGenPay.service;
+import com.NextGenPay.data.model.CustomerProfile;
 import com.NextGenPay.dto.request.CreateProfileRequest;
 import com.NextGenPay.dto.response.CreateProfileResponse;
 import org.springframework.stereotype.Service;
@@ -8,5 +9,8 @@ import org.springframework.stereotype.Service;
 public interface CustomerProfileService {
 
     CreateProfileResponse createProfile(CreateProfileRequest createProfileRequest);
+    CreateProfileResponse updateProfile(CreateProfileRequest createProfileRequest);
+    CustomerProfile findCustomerProfileByUsername(String userName);
+    CustomerProfile findCustomerProfileById(String id);
 
 }

@@ -1,18 +1,17 @@
 package com.NextGenPay.service;
+import com.NextGenPay.data.model.CustomerProfile;
 import com.NextGenPay.data.repository.CustomerRepo;
 import com.NextGenPay.dto.request.CustomerLoginRequest;
 import com.NextGenPay.dto.request.CustomerRegisterRequest;
 import com.NextGenPay.dto.response.CustomerLoginResponse;
 import com.NextGenPay.exception.EmailAlreadyExistException;
-import com.NextGenPay.exception.InvalidEmailException;
 import com.NextGenPay.exception.InvalidPasswordException;
 import com.NextGenPay.exception.InvalidPhoneNumberException;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
+
 
 
 @SpringBootTest
@@ -24,14 +23,15 @@ class CustomerServiceImplTest {
     @Autowired
     private CustomerServiceImpl customerService;
 
-    @BeforeEach
-    void beforeEach(){
-        customerRepo.deleteAll();
-    }
-    @AfterEach
-    void afterEach(){
-        customerRepo.deleteAll();
-    }
+
+//    @BeforeEach
+//    void beforeEach(){
+//        customerRepo.deleteAll();
+//    }
+//    @AfterEach
+//    void afterEach(){
+//        customerRepo.deleteAll();
+//    }
 
 
     @Test
@@ -97,7 +97,6 @@ class CustomerServiceImplTest {
         request1.setEmail("Choko@gmail.com");
         request1.setPassword("1111");
         assertThrows(InvalidPasswordException.class,()->customerService.loginCustomer(request1));
-
     }
 
 
