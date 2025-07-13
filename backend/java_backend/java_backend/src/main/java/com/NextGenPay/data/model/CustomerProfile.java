@@ -9,12 +9,13 @@ import java.time.LocalDate;
 
 @Setter
 @Getter
-@Document(collection="UserProfile")
+@Document(collection="Customer Profile")
 public class CustomerProfile {
 
     @Id
-    private String Id;
+    private String id;
 
+    private String customerId;
 
     private String firstName;
 
@@ -27,5 +28,7 @@ public class CustomerProfile {
     private LocalDate dateOfBirth;
 
     private String profileImage;
+
+
 
 }

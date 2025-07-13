@@ -29,6 +29,9 @@ public class CreateProfileRequest {
 
     private String profileImage;
 
+    @NotNull(message = "This field is required")
+    private String customerId;
+
 
 
 }

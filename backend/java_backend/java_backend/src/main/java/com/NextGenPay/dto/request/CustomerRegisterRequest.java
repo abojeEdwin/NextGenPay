@@ -21,6 +21,8 @@ public class CustomerRegisterRequest {
     @NotNull(message="This field is required")
     private String phoneNumber;
 
+    private String profileId;
+
     CustomerStatus customerStatus;
 
 

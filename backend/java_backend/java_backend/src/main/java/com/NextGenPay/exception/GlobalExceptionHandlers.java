@@ -37,6 +37,11 @@ public class GlobalExceptionHandlers {
             return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
         }
 
+        @ExceptionHandler(UserNameAlreadyExistException.class)
+        public ResponseEntity<String> handleUserNameAlreadyExist(UserNameAlreadyExistException ex) {
+            return new ResponseEntity<>(ex.getMessage(),HttpStatus.CONFLICT);
+        }
+
         @ExceptionHandler(Exception.class)
         public ResponseEntity<String> handleAll(Exception ex) {
             ex.printStackTrace();

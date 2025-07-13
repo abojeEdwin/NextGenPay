@@ -1,7 +1,8 @@
 package com.NextGenPay.service;
-
 import com.NextGenPay.data.model.Customer;
+import com.NextGenPay.data.model.CustomerProfile;
 import com.NextGenPay.data.model.CustomerStatus;
+import com.NextGenPay.data.repository.CustomerProfileRepo;
 import com.NextGenPay.data.repository.CustomerRepo;
 import com.NextGenPay.dto.request.CustomerLoginRequest;
 import com.NextGenPay.dto.request.CustomerRegisterRequest;
@@ -26,12 +27,17 @@ public class CustomerServiceImpl implements CustomerServiceAuth {
     @Autowired
     private JwtAuth jwtAuth;
 
+    @Autowired
+    private CustomerProfileRepo customerProfileRepo;
+
     @Override
     public CustomerRegisterResponse registerCustomer(CustomerRegisterRequest registerRequest) {
+
        if(customerRepo.existsByEmail(registerRequest.getEmail())){
            throw new EmailAlreadyExistException("Email already exists");}
         if(!verifyPhone.isVerifiedPhoneNumber(registerRequest.getPhoneNumber())){throw new InvalidPhoneNumberException("Invalid phone number");}
         String hashedPassword = HashPassword.hashPassword(registerRequest.getPassword());
+
        Customer customer = new Customer();
        customer.setEmail(registerRequest.getEmail());
        customer.setCustomerStatus(CustomerStatus.INACTIVE);
