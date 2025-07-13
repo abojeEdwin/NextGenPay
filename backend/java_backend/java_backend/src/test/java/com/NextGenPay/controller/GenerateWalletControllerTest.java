@@ -1,5 +1,4 @@
 package com.NextGenPay.controller;
-
 import com.NextGenPay.dto.request.GenerateWalletRequest;
 import com.NextGenPay.dto.response.GenerateWalletResponse;
 import com.NextGenPay.service.GenerateWalletServiceImpl;
