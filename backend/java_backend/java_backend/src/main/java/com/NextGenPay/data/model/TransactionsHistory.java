@@ -12,8 +12,8 @@ import java.time.Instant;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "transaction")
-public class Transaction {
+@Document(collection = "transactions")
+public class TransactionsHistory {
     @Id
     private String transactionId;
     private Instant dateTransferred =  Instant.now();

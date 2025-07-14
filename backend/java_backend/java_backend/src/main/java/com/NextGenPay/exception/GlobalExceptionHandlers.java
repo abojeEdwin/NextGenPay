@@ -56,5 +56,12 @@ public class GlobalExceptionHandlers {
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
 
+        @ExceptionHandler(AccountNotFoundException.class)
+        public ResponseEntity<Map<String, String>> handleAccountNotFound(AccountNotFoundException ex) {
+            Map<String, String> errors = new HashMap<>();
+            errors.put("Error", ex.getMessage());
+            return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
+        }
     }
+
 
