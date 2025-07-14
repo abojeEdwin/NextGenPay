@@ -1,47 +1,75 @@
 package com.NextGenPay.controller;
+import com.NextGenPay.data.model.Wallet;
+import com.NextGenPay.data.repository.WalletRepository;
 import com.NextGenPay.dto.request.GenerateWalletRequest;
 import com.NextGenPay.dto.response.GenerateWalletResponse;
-import com.NextGenPay.service.GenerateWalletServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@WebMvcTest(GenerateWalletControllerTest.class)
+import static org.hamcrest.Matchers.hasLength;
+import static org.hamcrest.Matchers.matchesPattern;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+
+//@WebMvcTest(GenerateWalletController.class)
+@AutoConfigureMockMvc
+@SpringBootTest
 class GenerateWalletControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    private GenerateWalletServiceImpl service;
-
     @Autowired
     private ObjectMapper objectMapper;
 
-    private GenerateWalletRequest request;
-    private GenerateWalletResponse response;
+    @Autowired
+    private WalletRepository walletRepo;
 
     @BeforeEach
-    void setUp() {
-        request = new GenerateWalletRequest("12345678");
-        response = new GenerateWalletResponse(
-                BigDecimal.ZERO,
-                "1234567891",
-                "Wallet created successfully"
-        );
+    void cleanUp() {
+        walletRepo.deleteAll();
     }
 
     @Test
     void postGenerateWallet_returns200_andResponseBody() throws Exception {
-        when(service.generateWallet(any(GenerateWalletRequest.class))).thenReturn(response);
+        GenerateWalletRequest request = new GenerateWalletRequest("12345678");
+
+        String jsonRequest = objectMapper.writeValueAsString(request);
+        String jsonResponse = mockMvc.perform(post("/api/wallets")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequest))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.balance").value(0))
+                .andExpect(jsonPath("$.accountNumber").isString())
+                .andExpect(jsonPath("$.accountNumber", hasLength(10)))
+                .andExpect(jsonPath("$.message").value("Wallet Created Successfully"))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        GenerateWalletResponse response = objectMapper.readValue(jsonResponse, GenerateWalletResponse.class);
+        List<Wallet> saved = walletRepo.findAll();
+        assertThat(saved).hasSize(1);
+
+        Wallet w = saved.get(0);
+        assertThat(w.getCustomerId()).isEqualTo("12345678");
+        assertThat(w.getBalance()).isEqualByComparingTo(BigDecimal.ZERO);
+        assertThat(w.getAccountNumber()).isEqualTo(response.getAccountNumber());
+
     }
 }
