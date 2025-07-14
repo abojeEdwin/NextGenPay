@@ -10,6 +10,7 @@ import com.NextGenPay.dto.response.CustomerLoginResponse;
 import com.NextGenPay.dto.response.CustomerRegisterResponse;
 import com.NextGenPay.exception.*;
 import com.NextGenPay.util.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,8 @@ public class CustomerServiceImpl implements CustomerServiceAuth {
 
     @Autowired
     private CustomerProfileRepo customerProfileRepo;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Override
     public CustomerRegisterResponse registerCustomer(CustomerRegisterRequest registerRequest) {
@@ -38,11 +41,9 @@ public class CustomerServiceImpl implements CustomerServiceAuth {
         if(!verifyPhone.isVerifiedPhoneNumber(registerRequest.getPhoneNumber())){throw new InvalidPhoneNumberException("Invalid phone number");}
         String hashedPassword = HashPassword.hashPassword(registerRequest.getPassword());
 
-       Customer customer = new Customer();
-       customer.setEmail(registerRequest.getEmail());
+       Customer customer = objectMapper.convertValue(registerRequest, Customer.class);
        customer.setCustomerStatus(CustomerStatus.INACTIVE);
        customer.setPassword(hashedPassword);
-       customer.setPhoneNumber(registerRequest.getPhoneNumber());
        Customer savedCustomer = customerRepo.save(customer);
 
        CustomerRegisterResponse registerResponse = new CustomerRegisterResponse(savedCustomer.getCustomerId(),
