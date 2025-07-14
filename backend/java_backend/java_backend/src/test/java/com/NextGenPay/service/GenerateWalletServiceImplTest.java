@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.mail.javamail.JavaMailSender;
+//import org.springframework.mail.javamail.JavaMailSender;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,9 +34,6 @@ class GenerateWalletServiceImplTest {
         walletRepo.deleteAll();
     }
 
-    @MockBean
-    private JavaMailSender javaMailSender;
-
     @Test
     void generateWallet_ShouldCreateWalletAndReturnExpectedResponse(){
         String customerId = "12345678";
@@ -44,6 +41,7 @@ class GenerateWalletServiceImplTest {
         GenerateWalletResponse response = service.generateWallet(request);
         assertEquals(1,walletRepo.count());
         assertNotNull(response);
+        System.out.print(response.getAccountNumber());
         assertEquals(10, response.getAccountNumber().length(), "Account number should be 10");
         assertEquals(BigDecimal.ZERO, response.getBalance(), "Initial balance should be zero");
     }
