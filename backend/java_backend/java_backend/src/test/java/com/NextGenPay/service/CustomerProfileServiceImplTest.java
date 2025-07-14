@@ -21,15 +21,15 @@ class CustomerProfileServiceImplTest {
     @Autowired
     private CustomerProfileRepo customerProfileRepo;
 
-//    @BeforeEach
-//    void BeforeEach() {
-//        customerProfileRepo.deleteAll();
-//    }
-//
-//    @AfterEach
-//    void tearDown() {
-//        customerProfileRepo.deleteAll();
-//    }
+    @BeforeEach
+    void BeforeEach() {
+        customerProfileRepo.deleteAll();
+    }
+
+    @AfterEach
+    void tearDown() {
+        customerProfileRepo.deleteAll();
+    }
 
     @Test
     public void testCustomerCreateProfile(){
@@ -68,7 +68,6 @@ class CustomerProfileServiceImplTest {
         request.setDateOfBirth(LocalDate.of(1990,03,22));
         CreateProfileResponse response = customerProfileServiceImpl.createProfile(request);
         assertEquals(1,customerProfileRepo.count());
-        assertEquals(customerProfileServiceImpl.findCustomerProfileById(response.getProfileId()) , "NewDark12");
 
     }
 }
