@@ -4,6 +4,6 @@
     "builder": "DOCKERFILE"
   },
   "deploy": {
-    "startCommand": "java -jar target/NextGenPay.jar"
+    "startCommand": "java -jar target/*.jar"
   }
 }
