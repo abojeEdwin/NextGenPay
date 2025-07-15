@@ -1,6 +1,4 @@
 package com.NextGenPay.service;
-
-import com.NextGenPay.data.model.TransactionsHistory;
 import com.NextGenPay.data.model.Wallet;
 import com.NextGenPay.data.repository.TransactionsHistoryRepository;
 import com.NextGenPay.data.repository.WalletRepository;

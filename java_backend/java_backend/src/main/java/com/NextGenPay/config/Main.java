@@ -1,4 +1,4 @@
 package com.NextGenPay.config;
 
-public class MAin {
+public class Main {
 }

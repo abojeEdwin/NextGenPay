@@ -10,7 +10,6 @@ import com.NextGenPay.dto.response.CustomerLoginResponse;
 import com.NextGenPay.dto.response.CustomerRegisterResponse;
 import com.NextGenPay.exception.*;
 import com.NextGenPay.util.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,23 +24,26 @@ public class CustomerServiceImpl implements CustomerServiceAuth {
     private VerifyPhone verifyPhone;
     @Autowired
     private HashPassword hashPassword;
+
     @Autowired
     private JwtAuth jwtAuth;
 
     @Autowired
     private CustomerProfileRepo customerProfileRepo;
-    @Autowired
-    private ObjectMapper objectMapper;
+
+
+
 
     @Override
     public CustomerRegisterResponse registerCustomer(CustomerRegisterRequest registerRequest) {
-
-       if(customerRepo.existsByEmail(registerRequest.getEmail())){
+        if(customerRepo.existsByEmail(registerRequest.getEmail())){
            throw new EmailAlreadyExistException("Email already exists");}
         if(!verifyPhone.isVerifiedPhoneNumber(registerRequest.getPhoneNumber())){throw new InvalidPhoneNumberException("Invalid phone number");}
         String hashedPassword = HashPassword.hashPassword(registerRequest.getPassword());
 
-       Customer customer = objectMapper.convertValue(registerRequest, Customer.class);
+       Customer customer = new Customer();
+       customer.setEmail(registerRequest.getEmail());
+       customer.setPhoneNumber(registerRequest.getPhoneNumber());
        customer.setCustomerStatus(CustomerStatus.INACTIVE);
        customer.setPassword(hashedPassword);
        Customer savedCustomer = customerRepo.save(customer);
@@ -50,8 +52,8 @@ public class CustomerServiceImpl implements CustomerServiceAuth {
                savedCustomer.getEmail(),
                savedCustomer.getPhoneNumber(),
                CustomerStatus.INACTIVE);
-       return registerResponse;
 
+       return registerResponse;
     }
 
     @Override
@@ -68,5 +70,6 @@ public class CustomerServiceImpl implements CustomerServiceAuth {
         loginResponse.setToken(token);
         loginResponse.setMessage("Success");
         return new CustomerLoginResponse(loginResponse.getMessage(),loginResponse.getToken());
+
     }
 }

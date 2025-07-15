@@ -1,5 +1,4 @@
 package com.NextGenPay.controller;
-import com.NextGenPay.data.model.CustomerProfile;
 import com.NextGenPay.dto.request.CreateProfileRequest;
 import com.NextGenPay.service.CustomerProfileServiceImpl;
 import jakarta.validation.Valid;

@@ -1,5 +1,4 @@
 package com.NextGenPay.service;
-
 import com.NextGenPay.data.model.TransactionsHistory;
 import com.NextGenPay.data.model.Wallet;
 import com.NextGenPay.data.repository.TransactionsHistoryRepository;
@@ -16,7 +15,7 @@ import java.math.BigDecimal;
 
 @Service
 @RequiredArgsConstructor
-public class AddFundsServiceImpl implements AddFundsService{
+public class AddFundsServiceImpl implements AddFundsService {
 
     private final WalletRepository walletRepo;
     private final TransactionsHistoryRepository txnHistoryRepo;

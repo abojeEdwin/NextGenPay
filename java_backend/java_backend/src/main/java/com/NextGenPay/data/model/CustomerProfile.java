@@ -1,5 +1,4 @@
 package com.NextGenPay.data.model;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;

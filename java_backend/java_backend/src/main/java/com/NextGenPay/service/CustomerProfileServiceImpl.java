@@ -3,21 +3,20 @@ import com.NextGenPay.data.model.Customer;
 import com.NextGenPay.data.model.CustomerProfile;
 import com.NextGenPay.data.repository.CustomerProfileRepo;
 import com.NextGenPay.data.repository.CustomerRepo;
-import com.NextGenPay.dto.request.CreateProfileRequest;
-import com.NextGenPay.dto.response.CreateProfileResponse;
 import com.NextGenPay.exception.CustomerNotFoundException;
 import com.NextGenPay.exception.UserNameAlreadyExistException;
+import com.NextGenPay.dto.request.CreateProfileRequest;
+import com.NextGenPay.dto.response.CreateProfileResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerProfileServiceImpl implements CustomerProfileService{
-
     @Autowired
     private CustomerProfileRepo customerProfileRepo;
 
     @Autowired
-    private CustomerRepo  customerRepo;
+    private CustomerRepo customerRepo;
 
 
     @Override
@@ -54,7 +53,6 @@ public class CustomerProfileServiceImpl implements CustomerProfileService{
 
         String message = "Profile updated successfully";
         return new CreateProfileResponse(message, savedProfile.getId(), savedProfile.getUserName());
-
     }
 
     private static CustomerProfile setCustomerProfile(CreateProfileRequest createProfileRequest, Customer newFoundCustomer) {

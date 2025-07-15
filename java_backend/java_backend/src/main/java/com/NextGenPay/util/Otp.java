@@ -8,7 +8,7 @@ public class Otp {
 
     private final ConcurrentHashMap<String, String> otpStorage = new ConcurrentHashMap<>();
     private static final int OTP_LENGTH = 6;
-    private static final long OTP_VALID_DURATION = 5 * 60 * 1000; // 5 minutes
+    private static final long OTP_VALID_DURATION = 5 * 60 * 1000;
 
     public String generateOTP(String email) {
         Random random = new Random();
