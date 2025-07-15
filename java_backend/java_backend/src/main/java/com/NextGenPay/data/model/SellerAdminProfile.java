@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @Setter
 @Document(collection = "SellerAdminProfile")
 public class SellerAdminProfile {
-
     @Id
     private String profileId;
     private String firstName;
