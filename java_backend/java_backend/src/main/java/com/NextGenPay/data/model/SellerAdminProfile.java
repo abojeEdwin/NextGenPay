@@ -19,7 +19,6 @@ public class SellerAdminProfile {
     private String userName;
     private String businessName;
     BusinessType businessType;
-    private String bankAccountId;
     private LocalDate dateOfBirth;
     private String profileImage;
 
