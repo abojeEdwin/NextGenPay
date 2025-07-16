@@ -1,6 +1,9 @@
 package com.NextGenPay.service;
 
+import com.NextGenPay.data.model.Cashier;
+import com.NextGenPay.data.model.Payload;
 import com.NextGenPay.data.model.SellerAdmin;
+import com.NextGenPay.data.repository.CashierRepo;
 import com.NextGenPay.data.repository.SellerAdminRepository;
 import com.NextGenPay.dto.request.GenerateQrCodeRequest;
 import com.NextGenPay.dto.response.GenerateQrCodeResponse;
@@ -12,7 +15,9 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -21,9 +26,11 @@ import java.util.Base64;
 
 @Service
 @RequiredArgsConstructor
+//@AllArgsConstructor
 public class GenerateQrCodeServiceImpl implements  GenerateQrCodeService {
     private final SellerAdminRepository sellerRepo;
     private final ObjectMapper objectMapper;
+    private final CashierRepo cashierRepo;
 
     @Override
     public GenerateQrCodeResponse generateQrCode(String apiKey, GenerateQrCodeRequest request) throws Exception {
@@ -33,9 +40,13 @@ public class GenerateQrCodeServiceImpl implements  GenerateQrCodeService {
         if (!sellerAdmin.getCashierIds().contains(request.getCashierId())) {
             throw new CashierNotManagedException("Cashier not managed by this seller");
         }
+        Cashier cashier = cashierRepo.findById(request.getCashierId())
+                .orElseThrow(() -> new AccountNotFoundException("Invalid Cashier Id"));
+
 
         Payload payload = new Payload(
                 request.getCashierId(),
+                cashier.getAccountNumber(),
                 request.getAmount().toString(),
                 Instant.now().toString()
         );
@@ -52,12 +63,6 @@ public class GenerateQrCodeServiceImpl implements  GenerateQrCodeService {
         return new GenerateQrCodeResponse(base64, expires);
     }
 
-    @AllArgsConstructor
-    private static class Payload {
-        public String cashierId;
-        public String amount;
-        public String timeStamp;
-    }
 
 }
 
