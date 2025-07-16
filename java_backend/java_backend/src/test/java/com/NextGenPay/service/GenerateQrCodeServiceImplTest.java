@@ -68,7 +68,7 @@ class GenerateQrCodeServiceImplTest {
     @Test
     void generateQr_returnsValidBase64PngContainingCorrectPayload() throws Exception {
         BigDecimal amount = new BigDecimal("2000.00");
-        GenerateQrCodeRequest request = new GenerateQrCodeRequest(cashierId, amount);
+        GenerateQrCodeRequest request = new GenerateQrCodeRequest("cashier-123", amount);
         GenerateQrCodeResponse response = qrCodeService.generateQrCode(apiKey, request);
 
         assertThat(response).isNotNull();
@@ -87,7 +87,8 @@ class GenerateQrCodeServiceImplTest {
         String json = result.getText();
         Map <String,String> map = objectMapper.readValue(json, new TypeReference<Map<String, String>>() {});
 
-        assertThat(map.get("cashierId")).isEqualTo(cashierId);
+        assertThat(map.get("cashierId")).isEqualTo("cashier-123");
+        assertThat(new BigDecimal(map.get("accountNumber"))).isEqualByComparingTo("1234567890");
         assertThat(new BigDecimal(map.get("amount"))).isEqualByComparingTo(amount);
         assertThat(map).containsKey("timestamp");
     }
