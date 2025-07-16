@@ -25,7 +25,6 @@ import java.util.Base64;
 
 @Service
 @RequiredArgsConstructor
-//@AllArgsConstructor
 public class GenerateQrCodeServiceImpl implements  GenerateQrCodeService {
     private final SellerAdminRepository sellerRepo;
     private final ObjectMapper objectMapper;
@@ -36,12 +35,12 @@ public class GenerateQrCodeServiceImpl implements  GenerateQrCodeService {
         SellerAdmin sellerAdmin = sellerRepo.findByApiKey(apiKey)
                 .orElseThrow(() -> new AccountNotFoundException("Invalid API Key"));
 
-        if (!sellerAdmin.getCashierIds().contains(request.getCashierId())) {
-            throw new CashierNotManagedException("Cashier not managed by this seller");
-        }
         Cashier cashier = cashierRepo.findById(request.getCashierId())
                 .orElseThrow(() -> new AccountNotFoundException("Invalid Cashier Id"));
 
+        if (!sellerAdmin.getSellerAdminId().contains(cashier.getSellerAdminId())) {
+            throw new CashierNotManagedException("Cashier not managed by this seller");
+        }
 
         Payload payload = new Payload(
                 request.getCashierId(),
