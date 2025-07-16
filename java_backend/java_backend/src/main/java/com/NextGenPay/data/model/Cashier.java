@@ -23,5 +23,4 @@ public class Cashier {
     private LocalDate dateOfBirth;
     private String sellerAdminId;
 
-
 }
