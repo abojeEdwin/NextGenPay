@@ -8,4 +8,5 @@ import java.util.Optional;
 @Repository
 public interface SellerAdminRepository extends MongoRepository<SellerAdmin,String> {
     Optional <SellerAdmin> findBySellerAdminId(String sellerId);
+    Optional<SellerAdmin> findByApiKey(String apiKey);
 }

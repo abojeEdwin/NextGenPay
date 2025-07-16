@@ -62,6 +62,13 @@ public class GlobalExceptionHandlers {
             errors.put("Error", ex.getMessage());
             return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
         }
-    }
+
+        @ExceptionHandler(CashierNotManagedException.class)
+        public ResponseEntity<?> handleCashierError(CashierNotManagedException ex) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("error", ex.getMessage()));
+        }
+
+}
 
 
