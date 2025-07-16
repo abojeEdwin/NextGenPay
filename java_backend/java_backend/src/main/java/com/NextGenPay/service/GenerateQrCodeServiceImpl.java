@@ -14,7 +14,6 @@ import com.google.zxing.common.BitMatrix;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.io.ByteArrayOutputStream;
 import java.time.Instant;
 import java.util.Base64;
