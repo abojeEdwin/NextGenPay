@@ -17,7 +17,6 @@ import java.util.List;
 public class SellerAdmin {
     @Id
     private String sellerAdminId;
-    private List<String> cashierIds;
     private String email;
     private String password;
     private String apiKey;
