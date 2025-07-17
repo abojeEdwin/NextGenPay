@@ -26,7 +26,7 @@ public class AddFundsServiceImpl implements AddFundsService {
         Wallet wallet = walletRepo.findByAccountNumber(req.getAccountNumber())
                 .orElseThrow(() -> new AccountNotFoundException("Account not found for account " + req.getAccountNumber()));
 
-        BigDecimal newBalance = wallet.getBalance().add(req.getAmount());
+        double newBalance = wallet.getBalance() + req.getAmount();
         wallet.setBalance(newBalance);
         walletRepo.save(wallet);
 

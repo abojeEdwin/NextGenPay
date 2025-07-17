@@ -6,7 +6,6 @@ import com.NextGenPay.dto.response.GenerateWalletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.math.BigDecimal;
 import java.security.SecureRandom;
 
 
@@ -28,7 +27,7 @@ public class GenerateWalletServiceImpl implements GenerateWalletServiceAuth{
 
         Wallet wallet = objectMapper.convertValue(request, Wallet.class);
         wallet.setAccountNumber(accountNumber);
-        wallet.setBalance(BigDecimal.ZERO);
+        wallet.setBalance(0.0);
 
         walletRepo.save(wallet);
 
