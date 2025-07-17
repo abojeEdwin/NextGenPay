@@ -36,9 +36,9 @@ public class GenerateQrCodeServiceImpl implements  GenerateQrCodeService {
         SellerAdmin sellerAdmin = sellerRepo.findByApiKey(apiKey)
                 .orElseThrow(() -> new AccountNotFoundException("Invalid API Key"));
 
-        if (!sellerAdmin.getCashierIds().contains(request.getCashierId())) {
-            throw new CashierNotManagedException("Cashier not managed by this seller");
-        }
+//        if (!sellerAdmin.getCashierIds().contains(request.getCashierId())) {
+//            throw new CashierNotManagedException("Cashier not managed by this seller");
+//        }
         Cashier cashier = cashierRepo.findById(request.getCashierId())
                 .orElseThrow(() -> new AccountNotFoundException("Invalid Cashier Id"));
 
