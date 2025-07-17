@@ -11,4 +11,5 @@ public interface SellerAdminRepository extends MongoRepository<SellerAdmin,Strin
     Optional <SellerAdmin> findBySellerAdminId(String sellerId);
     Optional<SellerAdmin> findByApiKey(String apiKey);
     SellerAdmin findByEmail(String email);
+    boolean existsByEmail(String email);
 }

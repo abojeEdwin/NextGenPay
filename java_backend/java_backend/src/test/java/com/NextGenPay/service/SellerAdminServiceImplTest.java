@@ -2,8 +2,10 @@ package com.NextGenPay.service;
 import com.NextGenPay.data.model.BusinessType;
 import com.NextGenPay.data.model.SellerAdmin;
 import com.NextGenPay.data.repository.SellerAdminRepository;
+import com.NextGenPay.dto.request.CreateCashierRequest;
 import com.NextGenPay.dto.request.SellerAdminLoginRequest;
 import com.NextGenPay.dto.request.SellerAdminRegisterRequest;
+import com.NextGenPay.dto.response.CreateCashierResponse;
 import com.NextGenPay.dto.response.SellerAdminLoginResponse;
 import com.NextGenPay.dto.response.SellerAdminRegisterResponse;
 import org.junit.jupiter.api.AfterEach;
@@ -47,16 +49,25 @@ class SellerAdminServiceImplTest {
         SellerAdminRegisterResponse response = sellerAdminService.registerSellerAdmin(request);
         assertEquals(1,sellerRepo.count());
         assertEquals(response.getMessage(),"Admin registered successfully");
-
     }
 
     @Test
     public void testSellerAdminCanLogin() {
-
         SellerAdminLoginRequest request = new SellerAdminLoginRequest();
         request.setEmail("abojeedwin@gmail.com");
         request.setPassword("password");
         SellerAdminLoginResponse response = sellerAdminService.loginSellerAdmin(request);
         assert(response.getMessage().equals("Success"));
+    }
+
+    @Test
+    public void testSellerAdminCreateCashier(){
+        CreateCashierRequest request = new CreateCashierRequest();
+        request.setAccountNumber("11222222");
+        request.setPhoneNumber("112223333");
+        request.setUserName("cashier wey sure");
+        request.setSellerAdminId("6878893d53966678bef426dc");
+        CreateCashierResponse response = sellerAdminService.createCashier(request);
+        assert(response.getMessage().equals("Cashier created successfully"));
     }
 }
