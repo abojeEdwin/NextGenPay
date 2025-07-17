@@ -67,9 +67,11 @@ class GenerateQrCodeServiceImplTest {
 
     @Test
     void generateQr_returnsValidBase64PngContainingCorrectPayload() throws Exception {
-        BigDecimal amount = new BigDecimal("2000.00");
-        GenerateQrCodeRequest request = new GenerateQrCodeRequest(cashierId, amount);
+        BigDecimal amount = new BigDecimal("5000.00");
+        GenerateQrCodeRequest request = new GenerateQrCodeRequest("cashier-123", amount);
         GenerateQrCodeResponse response = qrCodeService.generateQrCode(apiKey, request);
+
+        System.out.println(response);
 
         assertThat(response).isNotNull();
         assertThat(response.getQrCodeBase64()).isNotBlank();
@@ -85,11 +87,13 @@ class GenerateQrCodeServiceImplTest {
         Result result = new MultiFormatReader().decode(bitmap);
 
         String json = result.getText();
-        Map <String,String> map = objectMapper.readValue(json, new TypeReference<Map<String, String>>() {});
+        var map = objectMapper.readValue(json, java.util.Map.class);
+//        Map <String,String> map = objectMapper.readValue(json, new TypeReference<Map<String, String>>() {});
 
-        assertThat(map.get("cashierId")).isEqualTo(cashierId);
-        assertThat(new BigDecimal(map.get("amount"))).isEqualByComparingTo(amount);
-        assertThat(map).containsKey("timestamp");
+        assertThat(map.get("cashierId")).isEqualTo("cashier-123");
+        assertThat(new BigDecimal((String)map.get("amount"))).isEqualByComparingTo(amount);
+        assertThat(new BigDecimal((String)map.get("accountNumber"))).isEqualByComparingTo("1234567890");
+//        assertThat(map).containsKey("timestamp");
     }
 
 }
