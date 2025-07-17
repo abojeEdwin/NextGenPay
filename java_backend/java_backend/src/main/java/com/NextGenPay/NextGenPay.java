@@ -8,3 +8,4 @@ public class NextGenPay {
         SpringApplication.run(NextGenPay.class, args);
     }
 }
+
