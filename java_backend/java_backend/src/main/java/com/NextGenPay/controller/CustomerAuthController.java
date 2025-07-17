@@ -3,7 +3,7 @@ import com.NextGenPay.dto.request.CustomerLoginRequest;
 import com.NextGenPay.dto.request.CustomerRegisterRequest;
 import com.NextGenPay.dto.response.CustomerLoginResponse;
 import com.NextGenPay.dto.response.CustomerRegisterResponse;
-import com.NextGenPay.service.CustomerServiceImpl;
+import com.NextGenPay.service.CustomerAuthServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/customer")
 public class CustomerAuthController {
 
-    private final CustomerServiceImpl customerService;
+    private final CustomerAuthServiceImpl customerService;
 
     @PostMapping("/register")
     public ResponseEntity<CustomerRegisterResponse> registerCustomer(@RequestBody @Valid CustomerRegisterRequest request){

@@ -1,6 +1,4 @@
 package com.NextGenPay.dto.response;
-import com.NextGenPay.data.model.CustomerStatus;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,16 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CustomerRegisterResponse {
 
-
-    @NotNull(message = "This field is required")
+    private String message;
     private String customerId;
-
-    @NotNull(message="This field is required")
-    private String email;
-
-    @NotNull(message="This field is required")
-    private String phoneNumber;
-
-    CustomerStatus customerStatus;
 
 }

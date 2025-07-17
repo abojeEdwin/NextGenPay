@@ -20,8 +20,6 @@ public class CreateCashierRequest {
     @NotNull(message = "This field is required")
     private String accountNumber;
     @NotNull(message = "This field is required")
-    private LocalDate dateOfBirth;
-    @NotNull(message = "This field is required")
     private String sellerAdminId;
 
 }
