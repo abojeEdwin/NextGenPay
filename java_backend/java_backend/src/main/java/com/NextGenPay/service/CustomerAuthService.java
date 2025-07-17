@@ -6,7 +6,7 @@ import com.NextGenPay.dto.response.CustomerRegisterResponse;
 
 
 
-public interface CustomerServiceAuth {
+public interface CustomerAuthService {
     CustomerRegisterResponse registerCustomer(CustomerRegisterRequest RegisterRequest);
     CustomerLoginResponse loginCustomer(CustomerLoginRequest loginRequest);
 }
