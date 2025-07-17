@@ -3,23 +3,23 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.time.LocalDate;
+
 
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "Cashier")
-public class Cashier {
-    @Id
+@Document(collection = "DebitTransactionHistory")
+public class DebitTransactionHistory {
+
+    private String transactionId;
     private String cashierId;
-    private String userName;
-    private String phoneNumber;
-    private String accountNumber;
-    private String sellerAdminId;
+    private double amount;
+    private LocalDate transactionDate;
+    private TransactionStatus status;
+    private String description;
 
 }

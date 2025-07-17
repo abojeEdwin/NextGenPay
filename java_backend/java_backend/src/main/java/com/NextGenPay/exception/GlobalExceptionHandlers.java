@@ -26,6 +26,16 @@ public class GlobalExceptionHandlers {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
         }
 
+        @ExceptionHandler(AdminNotFoundException.class)
+        public ResponseEntity<String> handleAdminNotFound(AdminNotFoundException ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        }
+
+        @ExceptionHandler
+        public ResponseEntity<String> handleInvalidLoginCredentials(InvalidLoginCredentials ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
         @ExceptionHandler(InvalidPasswordException.class)
         public ResponseEntity<String> handleInvalidPassword(InvalidPasswordException ex) {
             return new ResponseEntity<>(ex.getMessage(),HttpStatus.UNAUTHORIZED);

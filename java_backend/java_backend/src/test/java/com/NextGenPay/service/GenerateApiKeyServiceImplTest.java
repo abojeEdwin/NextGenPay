@@ -25,15 +25,15 @@ class GenerateApiKeyServiceImplTest {
     @Autowired
     private GenerateApiKeyService service;
 
-    @BeforeEach
-    void setUp() {
-        sellerRepo.deleteAll();
-
-        SellerAdmin admin = new SellerAdmin();
-        admin.setSellerAdminId("seller-123");
-        admin.setEmail("seller@gmail.com");
-        sellerRepo.save(admin);
-    }
+//    @BeforeEach
+//    void setUp() {
+//        sellerRepo.deleteAll();
+//
+//        SellerAdmin admin = new SellerAdmin();
+//        admin.setSellerAdminId("seller-123");
+//        admin.setEmail("seller@gmail.com");
+//        sellerRepo.save(admin);
+//    }
 
     @Test
     void generateApiKey_shouldAssignApiKeyAndReturnResponse() {

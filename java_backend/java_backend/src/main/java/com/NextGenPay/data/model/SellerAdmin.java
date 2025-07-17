@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import java.util.List;
+
 
 @Getter
 @Setter
@@ -18,5 +18,9 @@ public class SellerAdmin {
     private String sellerAdminId;
     private String email;
     private String password;
+    private String businessName;
+    BusinessType businessType;
+    private String firstName;
+    private String lastName;
     private String apiKey;
 }
