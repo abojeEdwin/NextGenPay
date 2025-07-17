@@ -13,5 +13,6 @@ public class SellerAdminLoginResponse {
 
     private String message;
     private String sellerAdminId;
+    private String token;
 
 }
