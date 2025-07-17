@@ -68,28 +68,28 @@ class GenerateQrCodeServiceImplTest {
     @Test
     void generateQr_returnsValidBase64PngContainingCorrectPayload() throws Exception {
         BigDecimal amount = new BigDecimal("2000.00");
-//        GenerateQrCodeRequest request = new GenerateQrCodeRequest(cashierId, amount);
-//        GenerateQrCodeResponse response = qrCodeService.generateQrCode(apiKey, request);
+        GenerateQrCodeRequest request = new GenerateQrCodeRequest(cashierId, amount);
+        GenerateQrCodeResponse response = qrCodeService.generateQrCode(apiKey, request);
 
-//        assertThat(response).isNotNull();
-//        assertThat(response.getQrCodeBase64()).isNotBlank();
-//        assertThat(response.getExpiresAt()).isAfter(Instant.now());
-//
-//        byte[] png = Base64.getDecoder().decode(response.getQrCodeBase64());
-//
-//        BufferedImage img = ImageIO.read(new ByteArrayInputStream(png));
-//        assertThat(img).isNotNull();
-//
-//        LuminanceSource source = new BufferedImageLuminanceSource(img);
-//        BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
-//        Result result = new MultiFormatReader().decode(bitmap);
-//
-//        String json = result.getText();
-//        Map <String,String> map = objectMapper.readValue(json, new TypeReference<Map<String, String>>() {});
-//
-//        assertThat(map.get("cashierId")).isEqualTo(cashierId);
-//        assertThat(new BigDecimal(map.get("amount"))).isEqualByComparingTo(amount);
-//        assertThat(map).containsKey("timestamp");
+        assertThat(response).isNotNull();
+        assertThat(response.getQrCodeBase64()).isNotBlank();
+        assertThat(response.getExpiresAt()).isAfter(Instant.now());
+
+        byte[] png = Base64.getDecoder().decode(response.getQrCodeBase64());
+
+        BufferedImage img = ImageIO.read(new ByteArrayInputStream(png));
+        assertThat(img).isNotNull();
+
+        LuminanceSource source = new BufferedImageLuminanceSource(img);
+        BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+        Result result = new MultiFormatReader().decode(bitmap);
+
+        String json = result.getText();
+        Map <String,String> map = objectMapper.readValue(json, new TypeReference<Map<String, String>>() {});
+
+        assertThat(map.get("cashierId")).isEqualTo(cashierId);
+        assertThat(new BigDecimal(map.get("amount"))).isEqualByComparingTo(amount);
+        assertThat(map).containsKey("timestamp");
     }
 
 }
