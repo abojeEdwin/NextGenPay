@@ -16,5 +16,5 @@ public class AddFundsRequest {
     @NotBlank
     private String accountNumber;
     @NotNull @DecimalMin("0.01")
-    private BigDecimal amount;
+    private double amount;
 }

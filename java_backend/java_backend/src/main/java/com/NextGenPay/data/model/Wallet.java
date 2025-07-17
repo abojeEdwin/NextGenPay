@@ -16,5 +16,5 @@ public class Wallet {
     private String walletId;
     private String customerId;
     private String accountNumber;
-    private BigDecimal balance = BigDecimal.ZERO;
+    private double balance;
 }
