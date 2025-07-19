@@ -36,18 +36,18 @@ public class AddFundServiceTest {
         Wallet wallet = new Wallet();
         wallet.setCustomerId("custo-12345");
         wallet.setAccountNumber("123456789");
-        wallet.setBalance(BigDecimal.ZERO);
+        wallet.setBalance(0.0);
         walletRepository.save(wallet);
     }
 
     @Test
     void addFunds_shouldCreditWallet_andCreateTransaction(){
-        AddFundsRequest request = new AddFundsRequest("123456789", new BigDecimal("2000.00"));
+        AddFundsRequest request = new AddFundsRequest("123456789", (2000.00));
 
         AddFundsResponse response = service.addFunds(request);
 
         Wallet updated = walletRepository.findByAccountNumber("123456789").get();
-        assertThat(updated.getBalance()).isEqualByComparingTo(new BigDecimal("2000.00"));
+        assertThat(updated.getBalance()).isEqualByComparingTo(2000.00);
 
         List<?> txns = txnHistoryRepo.findAll();
         assertThat(txns).hasSize(1);
