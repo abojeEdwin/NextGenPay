@@ -7,6 +7,7 @@ import com.NextGenPay.data.repository.CashierRepo;
 import com.NextGenPay.data.repository.DebitTransactionHistoryRepo;
 import com.NextGenPay.data.repository.WalletRepository;
 import com.NextGenPay.dto.request.ScanToPayRequest;
+import com.NextGenPay.exception.WalletNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,13 @@ public class CustomerServiceImpl implements CustomerService{
         transactionHistory.setDescription("Debited from wallet");
         transactionHistory.setCashierId(cashier.getCashierId());
         return debitTransactionHistoryRepo.save(transactionHistory);
+    }
+
+    @Override
+    public Wallet displayWallet(String customerId) {
+        Wallet customerWallet = walletRepo.findByCustomerId(customerId);
+        if (customerWallet == null) {throw new WalletNotFoundException("User with id" + customerId + " not found" );}
+        return customerWallet;
     }
 
     private void validator(ScanToPayRequest request) {
