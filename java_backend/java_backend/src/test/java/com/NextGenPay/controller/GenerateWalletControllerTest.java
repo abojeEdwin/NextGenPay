@@ -65,7 +65,7 @@ class GenerateWalletControllerTest {
 
         Wallet w = saved.get(0);
         assertThat(w.getCustomerId()).isEqualTo("12345678");
-        assertThat(w.getBalance()).isEqualByComparingTo(BigDecimal.ZERO);
+        assertThat(w.getBalance()).isEqualByComparingTo(0.0);
         assertThat(w.getAccountNumber()).isEqualTo(response.getAccountNumber());
 
     }

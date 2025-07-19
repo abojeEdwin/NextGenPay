@@ -21,8 +21,7 @@ public class CustomerServiceController {
 
 
     @PostMapping("/scan-to-pay")
-    public ResponseEntity<DebitTransactionHistory   > scanToPay(@RequestBody @Valid ScanToPayRequest request){
+    public ResponseEntity<DebitTransactionHistory> scanToPay(@RequestBody @Valid ScanToPayRequest request){
         return ResponseEntity.ok(customerService.scanToPay(request));
     }
-
 }
