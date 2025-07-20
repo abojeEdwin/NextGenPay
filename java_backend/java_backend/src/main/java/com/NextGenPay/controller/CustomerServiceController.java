@@ -6,10 +6,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/customer-service")
@@ -23,5 +20,10 @@ public class CustomerServiceController {
     @PostMapping("/scan-to-pay")
     public ResponseEntity<DebitTransactionHistory> scanToPay(@RequestBody @Valid ScanToPayRequest request){
         return ResponseEntity.ok(customerService.scanToPay(request));
+    }
+
+    @PostMapping("/display-wallet")
+    public ResponseEntity<?> displayWallet(@RequestBody @Valid String customerId){
+        return ResponseEntity.ok(customerService.displayWallet(customerId));
     }
 }
