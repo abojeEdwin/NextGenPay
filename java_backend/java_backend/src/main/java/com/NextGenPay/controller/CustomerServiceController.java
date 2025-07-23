@@ -1,5 +1,6 @@
 package com.NextGenPay.controller;
 import com.NextGenPay.data.model.DebitTransactionHistory;
+import com.NextGenPay.data.model.Wallet;
 import com.NextGenPay.dto.request.ScanToPayRequest;
 import com.NextGenPay.service.CustomerService;
 import jakarta.validation.Valid;
@@ -22,8 +23,8 @@ public class CustomerServiceController {
         return ResponseEntity.ok(customerService.scanToPay(request));
     }
 
-    @PostMapping("/display-wallet")
-    public ResponseEntity<?> displayWallet(@RequestBody @Valid String customerId){
-        return ResponseEntity.ok(customerService.displayWallet(customerId));
+    @GetMapping("/displaywalletbyid")
+    public ResponseEntity<Wallet> displayWallet(@RequestBody String id){
+        return ResponseEntity.ok(customerService.displayWallet(id));
     }
 }

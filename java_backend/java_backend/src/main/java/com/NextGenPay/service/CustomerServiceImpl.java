@@ -47,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public Wallet displayWallet(String customerId) {
         Wallet customerWallet = walletRepo.findByCustomerId(customerId);
-        if (customerWallet == null) {throw new WalletNotFoundException("User with id" + customerId + " not found" );}
+        if (customerWallet == null) {throw new WalletNotFoundException("User with id " + customerId + " not found" );}
         return customerWallet;
     }
 

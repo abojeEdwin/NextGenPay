@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/qrcode")
-public class GenerateQrController {
+public class    GenerateQrController {
     private final GenerateQrCodeService qrService;
 
     @PostMapping

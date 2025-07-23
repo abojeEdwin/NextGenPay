@@ -40,6 +40,6 @@ class GenerateWalletServiceImplTest {
         assertNotNull(response);
         System.out.print(response.getAccountNumber());
         assertEquals(10, response.getAccountNumber().length(), "Account number should be 10");
-        assertEquals(BigDecimal.ZERO, response.getBalance(), "Initial balance should be zero");
+        assertEquals(0.0, response.getBalance(), "Initial balance should be zero");
     }
 }

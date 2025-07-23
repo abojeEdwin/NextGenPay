@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class Payload {
     public String cashierId;
-    public String amount;
+    public double amount;
     public String accountNumber;
     public String timeStamp;
 }

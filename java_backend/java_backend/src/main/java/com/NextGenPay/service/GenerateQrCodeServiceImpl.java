@@ -44,7 +44,7 @@ public class GenerateQrCodeServiceImpl implements  GenerateQrCodeService {
 
         Payload payload = new Payload(
                 request.getCashierId(),
-                request.getAmount().toString(),
+                request.getAmount(),
                 cashier.getAccountNumber(),
                 Instant.now().toString()
         );
